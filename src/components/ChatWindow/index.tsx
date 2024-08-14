@@ -43,6 +43,8 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
       
         if (e.nativeEvent.code == 'Enter') {
             e.preventDefault();
+            console.log(connection.connectionId)
+            console.log(chatSelected)
             if (connection.connectionId && chatSelected) {
                  sendMessage(
                     {
