@@ -8,6 +8,7 @@ import { environment } from "../../settings";
 
 const connection = new signalR.HubConnectionBuilder()
    .withUrl(environment.apiUrl + "/chat", {
+      withCredentials: false,
       accessTokenFactory: () => localStorage.getItem("access_token")!  
     })
    .build();
