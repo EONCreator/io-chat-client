@@ -10,6 +10,7 @@ const connection = new signalR.HubConnectionBuilder()
    .withUrl(environment.apiUrl + "/chat", {
       withCredentials: false,
       skipNegotiation: true,
+      transport: signalR.HttpTransportType.WebSockets,
       accessTokenFactory: () => localStorage.getItem("access_token")!  
     })
    .build();
