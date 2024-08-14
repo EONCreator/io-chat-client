@@ -4,9 +4,10 @@ import { addMessage } from "../../store/messagesSlice";
 import { useDispatch } from "react-redux";
 import store from "../../store";
 import axios from "axios";
+import { environment } from "../../settings";
 
 const connection = new signalR.HubConnectionBuilder()
-   .withUrl("http://localhost:5010/chat", {
+   .withUrl(environment.apiUrl + "/chat", {
       accessTokenFactory: () => localStorage.getItem("access_token")!  
     })
    .build();

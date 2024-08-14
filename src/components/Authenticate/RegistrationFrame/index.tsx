@@ -4,6 +4,7 @@ import { setAuthenticated, setFirstName, setLastName, setLogin, setToken, setUse
 import axios from 'axios';
 import './styles.scss'
 import AvatarMaker from './AvatarMaker'
+import { environment } from '../../../settings';
 
 interface RegistrationFrameProps {
   title: string;
@@ -70,7 +71,7 @@ const RegistrationFrame: FC<RegistrationFrameProps> = ({ title }) => {
   };
 
   const createUser = () => {
-    axios.post("http://localhost:5010/api/users/create", { userName: name, password, firstName, lastName })
+    axios.post(environment.apiUrl + "/api/users/create", { userName: name, password, firstName, lastName })
       .then((e) => {
         console.log(e.data)
         localStorage.setItem('access_token', e.data.accessToken)

@@ -7,6 +7,7 @@ import './styles.scss';
 import connection from '../../middlewares/signalrMiddleware';
 import store from '../../store';
 import ConnectionStatus from './components/ConnectionStatus';
+import { environment } from '../../settings';
 
 interface ChatRoomsProps {
     
@@ -45,7 +46,7 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
       const config = {
         headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
       };
-      axios.get("http://localhost:5010/api/chats/getChatRooms", config)
+      axios.get(environment.apiUrl + "/api/chats/getChatRooms", config)
       .then(e => {
         console.log(e.data.chatRooms)
         dispatch(setChatRooms(e.data.chatRooms))
@@ -135,7 +136,7 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
         const config = {
           headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
         };
-        axios.get(`http://localhost:5010/api/chats/findUser?userName=${userName}`, config)
+        axios.get(environment.apiUrl + `/api/chats/findUser?userName=${userName}`, config)
         .then(e => {
           console.log(e.data)
           const room = {
@@ -186,7 +187,7 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
             <div key={i} onClick={() => chatAction(c)} 
             className={activeChatRoom?.chatRoomId == c.chatRoomId 
             ? (c.unreadMessages > 0 ? 'user active unread' : 'user active') : (c.unreadMessages > 0 ? 'user unread' : 'user')}>
-                <div className='avatar'>{c.avatar != null ? <div><img src={"http://localhost:5010/Assets/Images/" + c.avatar + "_medium.png"} /></div> : c.chatRoomName[0]}{c.online ? <span className='diod online'>•</span> : <span className="diod offline">•</span>}</div>
+                <div className='avatar'>{c.avatar != null ? <div><img src={environment.apiUrl + "/Assets/Images/" + c.avatar + "_medium.png"} /></div> : c.chatRoomName[0]}{c.online ? <span className='diod online'>•</span> : <span className="diod offline">•</span>}</div>
                 <div className='info'>
                   <div className='name'>{c.unreadMessages > 0 ? c.chatRoomName.substring(0, 15) + "..." : c.chatRoomName}</div>
                   <div className='last-message'>

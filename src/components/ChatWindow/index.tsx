@@ -8,6 +8,7 @@ import { setActiveChatRoom, setChatRoomLastMessage, setChatRooms, sortChatRooms,
 import { addMessage } from '../../store/messagesSlice';
 import store from '../../store';
 import axios from 'axios';
+import { environment } from '../../settings';
 
 interface ChatWindowProps {
 
@@ -74,7 +75,7 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
             headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
         };
         console.log(chatRoomId)
-        axios.post("http://localhost:5010/api/chats/writingMessage?chatRoomId=" + chatRoomId, {}, config)
+        axios.post(environment.apiUrl + "/api/chats/writingMessage?chatRoomId=" + chatRoomId, {}, config)
             .then((e) => {
                 setTimeout(() => setWriting(true), 3000)
             })
@@ -92,7 +93,7 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
         if (message.chatRoomId == 0) {
             const ids = [userId, activeChatRoom!.id]
 
-            axios.post("http://localhost:5010/api/chats/createChatRoom", { ids }, config)
+            axios.post(environment.apiUrl + "/api/chats/createChatRoom", { ids }, config)
             .then((e) => {
                 console.log(e.data)
 
@@ -117,14 +118,14 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
                 message.chatRoomId = e.data.chatRoomId
                 console.log(message)
 
-                axios.post(`http://localhost:5010/api/chats/sendMessage`, message, config)
+                axios.post(environment.apiUrl + `/api/chats/sendMessage`, message, config)
                 .then((e) => {
                     console.log(e)
                 })
             });
         } else {
             console.log(message)
-            axios.post(`http://localhost:5010/api/chats/sendMessage`, message, config)
+            axios.post(environment.apiUrl + `/api/chats/sendMessage`, message, config)
             .then((e) => {
                 console.log(e)
             })
@@ -163,7 +164,7 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
                 <div className='row chat-header'>
                     <div className='info'>
                         <div className='block'>
-                            <div className='avatar'>{activeChatRoom?.avatar != null ? <img src={"http://localhost:5010/Assets/Images/" + activeChatRoom?.avatar + "_medium.png"} /> : activeChatRoom?.chatRoomName[0]}</div>
+                            <div className='avatar'>{activeChatRoom?.avatar != null ? <img src={environment.apiUrl + "/Assets/Images/" + activeChatRoom?.avatar + "_medium.png"} /> : activeChatRoom?.chatRoomName[0]}</div>
                         </div>
                         <div className='block'>
                             <div className='name'>{activeChatRoom?.chatRoomName}</div>

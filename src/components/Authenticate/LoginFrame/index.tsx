@@ -4,6 +4,7 @@ import { setAuthenticated, setAvatar, setFirstName, setLastName, setLogin, setTo
 import axios from 'axios';
 import './styles.scss'
 import store from '../../../store';
+import { environment } from '../../../settings';
 
 interface LoginFrameProps {
   title: string;
@@ -32,7 +33,7 @@ const LoginFrame: FC<LoginFrameProps> = ({ title }) => {
   };
 
   const authenticateUser = () => {
-    axios.post("http://localhost:5010/api/users/authenticate", { userName: name, password })
+    axios.post(environment.apiUrl + "/api/users/authenticate", { userName: name, password })
       .then((e) => {
         localStorage.setItem('access_token', e.data.accessToken)
         dispatch(setToken(e.data.accessToken))

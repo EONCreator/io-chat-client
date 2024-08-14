@@ -6,6 +6,7 @@ import { useAppSelector, useAppDispatch } from './../../../../store/hooks';
 import { setAuthenticated, setAvatar } from './../../../../store/userSlice';
 
 import './styles.scss'
+import { environment } from '../../../../settings';
 
 interface AvatarMakerProps {
     
@@ -32,7 +33,7 @@ const AvatarMaker: FC<AvatarMakerProps> = () => {
             headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
         };
 
-        axios.post("http://localhost:5010/api/users/setAvatar", { base64EncodedImage: preview }, config)
+        axios.post(environment.apiUrl + "/api/users/setAvatar", { base64EncodedImage: preview }, config)
           .then((e) => {
             dispatch(setAuthenticated(true))
             dispatch(setAvatar(e.data.avatar))

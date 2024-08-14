@@ -5,6 +5,7 @@ import axios from 'axios';
 import LoginFrame from './LoginFrame';
 import RegistrationFrame from './RegistrationFrame';
 import './styles.scss'
+import { environment } from '../../settings';
 
 interface AuthenticateProps {
   title: string;
@@ -22,7 +23,7 @@ const Authenticate: FC<AuthenticateProps> = ({ title }) => {
       const config = {
         headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
       };
-      axios.get("http://localhost:5010/api/users/getCurrentUser", config)
+      axios.get(environment.apiUrl + "/api/users/getCurrentUser", config)
       .then(e => {
         console.log(e.data)
         dispatch(setAuthenticated(true))
