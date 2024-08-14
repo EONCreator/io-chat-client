@@ -37,7 +37,8 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
     const handleKeywordKeypress = (e: any) => {
         if (writing) {
             setWriting(false)
-            writingMessage(activeChatRoom!.chatRoomId)
+            if (activeChatRoom!.chatRoomId != 0)
+                writingMessage(activeChatRoom!.chatRoomId)
         }
       
         if (e.nativeEvent.code == 'Enter') {
