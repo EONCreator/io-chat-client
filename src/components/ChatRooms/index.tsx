@@ -14,6 +14,7 @@ interface ChatRoomsProps {
 }
 
 const ChatRooms: FC<ChatRoomsProps> = () => {
+    const connected = useAppSelector(state => state.hubConnectionSlice.connected)
     const userId = useAppSelector(state => state.userSlice?.id);
     const chatRooms = useAppSelector(state => state.messagesSlice.chatRooms);
     const allChatRooms = useAppSelector(state => state.messagesSlice.allChatRooms);
@@ -63,7 +64,7 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
     connection.on("send", (message) => {
         console.log(message)
         console.log(allChatRooms)
-        if (connection.connectionId != null) {
+        if (connected) {
           const chatRoom = chatRooms.filter(u => u.chatRoomId == message.chatRoomId)[0]
 
           if (chatRoomIsExists(chatRoom)) {

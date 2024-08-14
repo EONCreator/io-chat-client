@@ -146,7 +146,7 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
     useEffect(() => {
         connection.on("send", (message) => {
             console.log(message)
-            if (connection.connectionId != null) {
+            if (connected) {
                 if (message.senderId == store.getState().userSlice?.id 
                 || (message.chatRoomId == store.getState().messagesSlice.activeChatRoom?.chatRoomId)) {
                     dispatch(addMessage({ 
@@ -216,7 +216,7 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
                     <div className='action-buttons'>
                         <button className='sticker'><img src='./smile.png' ></img></button>
                         <button onClick={() => 
-                                connection.connectionId && chatSelected
+                                connected && chatSelected
                                 ? sendMessage(
                                     {
                                         chatRoomId: activeChatRoomId,
