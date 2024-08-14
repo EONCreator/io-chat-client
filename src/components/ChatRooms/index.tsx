@@ -64,7 +64,7 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
     connection.on("send", (message) => {
         console.log(message)
         console.log(allChatRooms)
-        if (connected) {
+        if (store.getState().hubConnectionSlice.connected) {
           const chatRoom = chatRooms.filter(u => u.chatRoomId == message.chatRoomId)[0]
 
           if (chatRoomIsExists(chatRoom)) {

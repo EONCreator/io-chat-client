@@ -146,7 +146,7 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
     useEffect(() => {
         connection.on("send", (message) => {
             console.log(message)
-            if (connected) {
+            if (store.getState().hubConnectionSlice.connected) {
                 if (message.senderId == store.getState().userSlice?.id 
                 || (message.chatRoomId == store.getState().messagesSlice.activeChatRoom?.chatRoomId)) {
                     dispatch(addMessage({ 
