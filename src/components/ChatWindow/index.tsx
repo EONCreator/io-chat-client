@@ -183,7 +183,7 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
                     <div key={i} className='message-container'>
                         
                         {m.senderId != userId ? <div className='avatar sender'>
-                            {m.senderAvatar != null ? <img src={"http://localhost:5010/Assets/Images/" + m.senderAvatar + "_medium.png"} /> 
+                            {m.senderAvatar != null ? <img src={environment.apiUrl + "/Assets/Images/" + m.senderAvatar + "_medium.png"} /> 
                                 : (m.senderName != null ? m.senderName[0] : "")}
                         </div> : <></>}
 
@@ -196,7 +196,7 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
                         </div>
                         {m.senderId == userId ? <div className='avatar getter'>
                             
-                            {userAvatar != null ? <img src={"http://localhost:5010/Assets/Images/" + userAvatar + "_medium.png"} /> 
+                            {userAvatar != null ? <img src={environment.apiUrl + "/Assets/Images/" + userAvatar + "_medium.png"} /> 
                                 : (firstName != null ? firstName[0] : "")}
                         </div> : <></>}
                     </div>
