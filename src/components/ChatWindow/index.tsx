@@ -15,6 +15,7 @@ interface ChatWindowProps {
 }
 
 const ChatWindow: FC<ChatWindowProps> = ({}) => {
+    const connected = useAppSelector(state => state.hubConnectionSlice.connected)
     const userId = useAppSelector(state => state.userSlice?.id);
     const userAvatar = useAppSelector(state => state.userSlice?.avatar)
 
@@ -45,7 +46,8 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
             e.preventDefault();
             console.log(connection.connectionId)
             console.log(chatSelected)
-            if (connection.connectionId && chatSelected) {
+            console.log(connected)
+            if (connected && chatSelected) {
                  sendMessage(
                     {
                         chatRoomId: activeChatRoomId,
