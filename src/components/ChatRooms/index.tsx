@@ -188,6 +188,7 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
     //setActiveChatRoomIndex(chatRooms.indexOf(chatRooms.filter(c => c.chatRoomId == chatRoom.chatRoomId)[0]));
     
     if (chatRoom.chatRoomId != 0) {
+      console.log("test 1")
       const config = {
         headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
       };
@@ -195,8 +196,10 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
       .then(e => {
         dispatch(setMessages(e.data.messages))
       });
+      console.log("test 2")
       dispatch(removeAllMessagesFromChat());
       dispatch(removeChatRoomsUnreadMessages(chatRoom));
+      console.log("test 3")
     }
     else {
       console.log("CHAT ROOM ID IS NULL")
