@@ -184,6 +184,7 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
 
   const setActiveChat = (chatRoom: ChatRoom) => {
     dispatch(setActiveChatRoom(chatRoom))
+    console.log(chatRoom)
     //setActiveChatRoomIndex(chatRooms.indexOf(chatRooms.filter(c => c.chatRoomId == chatRoom.chatRoomId)[0]));
     
     if (chatRoom.chatRoomId != 0) {
@@ -196,6 +197,9 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
       });
       dispatch(removeAllMessagesFromChat());
       dispatch(removeChatRoomsUnreadMessages(chatRoom));
+    }
+    else {
+      console.log("CHAT ROOM ID IS NULL")
     }
   };
 
