@@ -232,7 +232,9 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
             </div>  
             : 
             <div className='content'>
-                <div className='choose-user'>Выберите пользователя для переписки</div>
+                <div className='choose-user'>
+                    <span>Выберите пользователя для переписки</span>
+                </div>
             </div>
             }
         </div>

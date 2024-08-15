@@ -15,6 +15,34 @@ iframe
   text-align: center;
 }
 
+@media screen and (max-width: 400px) {
+  html {
+    height: 100%;
+  }
+
+  body {
+    height: 100%;
+  }
+
+  #root {
+    height: 100%;
+  }
+
+  .content {
+    height: 100% !important;
+  }
+
+  .frame {
+    margin-top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .chat {
+    display: none !important;
+  }
+}
+
 .frame {
   display: flex;
   align-items: center;

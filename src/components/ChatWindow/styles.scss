@@ -43,6 +43,14 @@ body {
     justify-content: center;
     align-items: center;
     color: rgb(63, 63, 63);
+
+    span {
+        padding: 3px 10px;
+        color: white;
+        background: #7f8dff;
+        border-radius: 7px;
+        line-height: 21px;    
+    }
 }
 
 .chat-room {
@@ -50,7 +58,7 @@ body {
     flex-wrap: wrap;
     align-items: flex-end;
     align-content: space-between;
-    width: 520px;
+    width: 530px;
     height: 580px;
     
     border: 1px solid lightgray;
