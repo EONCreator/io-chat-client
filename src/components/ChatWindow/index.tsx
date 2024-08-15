@@ -110,7 +110,7 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
                     lastMessage: e.data.lastMessage,
                     unreadMessages: 0,
                     userName: "user_name",
-                    online: e.data.online
+                    online: true // TODO
                 }
 
                 const rooms = [...allChatRooms, room]
