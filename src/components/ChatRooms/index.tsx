@@ -152,7 +152,7 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
           chatRoomName: chatRoom.chatRoomName,
           lastMessage: "Последнее сообщение",
           unreadMessages: 0,
-          online: chatRoom.online
+          online: true //TODO
         }
 
         const rooms = [...allChatRooms, room]
