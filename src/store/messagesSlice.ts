@@ -74,6 +74,9 @@ const messagesSlice = createSlice({
                     state.activeChatRoom.online = action.payload.online
             }
         },
+        setMessages(state, action: PayloadAction<Message[]>) {
+            state.messages = action.payload
+        },
         resetTestState(state) {
             state.messages = []
         }
@@ -93,6 +96,7 @@ export const {
     setAllChatRooms,
     chatRoomWriting,
     setChatRoomOnline,
+    setMessages,
     resetTestState 
 } = messagesSlice.actions;
   

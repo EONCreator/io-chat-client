@@ -2,7 +2,21 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { setFirstName, setLastName, setToken, setUserName } from '../../store/userSlice';
 import axios from 'axios';
-import { addChatRoom, addUnreadMessageToChatRoom, removeAllMessagesFromChat, removeChatRoomsUnreadMessages, setActiveChatRoom, setChatRoomLastMessage, setChatRooms, sortChatRooms, setAllChatRooms, chatRoomWriting, setChatRoomOnline } from '../../store/messagesSlice';
+
+import { 
+  addChatRoom, 
+  addUnreadMessageToChatRoom, 
+  removeAllMessagesFromChat, 
+  removeChatRoomsUnreadMessages, 
+  setActiveChatRoom, 
+  setChatRoomLastMessage, 
+  setChatRooms, 
+  sortChatRooms, 
+  setAllChatRooms,
+  setChatRoomOnline, 
+  setMessages} 
+from '../../store/messagesSlice';
+
 import './styles.scss';
 import connection from '../../middlewares/signalrMiddleware';
 import store from '../../store';
@@ -39,7 +53,21 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
             if (chatRooms.length == 0)
               findUser(e.target.value)
           }
-  };
+    };
+
+    const getMessages = (chatRoomId: number) => {
+      const config = {
+        headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
+      };
+      axios.get(environment.apiUrl + "/api/chats/getMessages?chatRoomId=" + chatRoomId, config)
+      .then(e => {
+        console.log(e.data.chatRooms)
+        dispatch(setMessages(e.data.messages))
+        dispatch(setChatRooms(e.data.chatRooms))
+        console.log(chatRooms)
+        dispatch(setAllChatRooms(e.data.chatRooms))
+      });
+    }
 
   useEffect(() => {
     const token = localStorage.getItem("access_token")
@@ -157,8 +185,18 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
   const setActiveChat = (chatRoom: ChatRoom) => {
     dispatch(setActiveChatRoom(chatRoom))
     //setActiveChatRoomIndex(chatRooms.indexOf(chatRooms.filter(c => c.chatRoomId == chatRoom.chatRoomId)[0]));
-    dispatch(removeAllMessagesFromChat());
-    dispatch(removeChatRoomsUnreadMessages(chatRoom));
+    
+    if (chatRoom.chatRoomId != 0) {
+      const config = {
+        headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
+      };
+      axios.get(environment.apiUrl + `/api/chats/getMessages?chatRoomId=${chatRoom.chatRoomId}`, config)
+      .then(e => {
+        dispatch(setMessages(e.data.messages))
+      });
+      dispatch(removeAllMessagesFromChat());
+      dispatch(removeChatRoomsUnreadMessages(chatRoom));
+    }
   };
 
   const chatRoomIsExists = (chatRoom: ChatRoom) => store.getState().messagesSlice.allChatRooms.some(c => c.chatRoomId == chatRoom.chatRoomId);

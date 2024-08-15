@@ -26,29 +26,58 @@ const RegistrationFrame: FC<RegistrationFrameProps> = ({ title }) => {
   const [firstnameError, setFirstnameError] = useState<string>("");
   const [imageSrc, setImageSrc] = useState<string>("");
 
+  const [usernameValid, setUsernameValid] = useState<boolean>(false);
+  const [passwordValid, setPasswordValid] = useState<boolean>(false);
+  const [firstnameValid, setFirstnameValid] = useState<boolean>(false);
+
   const [step, setStep] = useState<number>(1);
 
-  const isValid = () => name!.length > 3 && password!.length > 5 && firstName!.length != 0;
+  const isValid = usernameValid && passwordValid && firstnameValid;
 
   const handleUserName = (e: any) => {
       setName(e.target.value)  
   };
   
   const validateUsername = () => {
-    if (name?.length == 0)
+    if (name?.length == 0) {
       setUsernameError("Имя пользователя не должно быть пустым")
+      setFirstnameValid(false)
+    }
+    else {
+      setUsernameError("")
+      setFirstnameValid(true)
+    }
   }
 
   const handlePassword = (e: any) => {
     setPassword(e.target.value)  
   };
 
-  const validatePassword = () => {
-    if (password?.length == 0)
-      setPasswordError("Пароль не может быть пустым")
+  function validateString(input: string): boolean {
+    const hasUpperCase = /[A-Z]/.test(input);
+    const hasNumber = /\d/.test(input);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>[\]\\';'`~_-]/.test(input); // Добавлены все специальные символы
+    
+    return hasUpperCase && hasNumber && hasSpecialChar;
+  }
 
-    if (password!.length < 5)
+  const validatePassword = () => {
+    if (password?.length == 0) {
+      setPasswordError("Пароль не может быть пустым")
+      setPasswordValid(false)
+    }
+    else if (password!.length < 5) {
       setPasswordError("Пароль должен быть не менее 5 символов")
+      setPasswordValid(false)
+    }
+    else if (!validateString(password!)) {
+      setPasswordError("Пароль должен содержать хотя бы одну цифру, один заглавный символ, и хотя бы один специальный символ (например ! _ -)")
+      setPasswordValid(false)
+    }
+    else {
+      setPasswordError("")
+      setPasswordValid(true)
+    }
   }
 
   const handleUserFirstName = (e: any) => {
@@ -56,8 +85,14 @@ const RegistrationFrame: FC<RegistrationFrameProps> = ({ title }) => {
   };
 
   const validateFirstname = () => {
-    if (firstName?.length == 0)
+    if (firstName?.length == 0) {
       setFirstnameError("Имя не может быть пустым")
+      setFirstnameValid(false)
+    }
+    else {
+      setFirstnameError("")
+      setFirstnameValid(true)
+    }
   }
 
   const handleUserLastName = (e: any) => {
@@ -92,6 +127,7 @@ const RegistrationFrame: FC<RegistrationFrameProps> = ({ title }) => {
         {
           step == 1 
           ? <div className='login-frame'>
+            
             <div className='block'>
                 <h3 className='title'>{title}</h3>
             </div>
@@ -139,7 +175,7 @@ const RegistrationFrame: FC<RegistrationFrameProps> = ({ title }) => {
             </div>
             <div className='block'>
                 <div className='submit-form'>
-                    <button disabled={!isValid} className='submit-button' onClick={createUser}>Регистрация</button>
+                    <button className='submit-button' onClick={createUser}>Регистрация</button>
                 </div>
             </div>
             <label className='error'>{error}</label>
