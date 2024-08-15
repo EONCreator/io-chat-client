@@ -7,12 +7,14 @@ import axios from 'axios';
 
 type HubConnectionState = {
   messages: Message[],
-  connected: boolean
+  connected: boolean,
+  mobile: boolean;
 }
 
 const initialState: HubConnectionState = {
   messages: [],
-  connected: false
+  connected: false,
+  mobile: false
 };
 
 const hubConnectionSlice = createSlice({
@@ -24,6 +26,9 @@ const hubConnectionSlice = createSlice({
       },
       setConnected(state, action: PayloadAction<boolean>) {
         state.connected = action.payload
+      },
+      setMobile(state, action: PayloadAction<boolean>) {
+
       },
       resetTestState(state) {
         

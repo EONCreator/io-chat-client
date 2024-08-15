@@ -4,7 +4,9 @@ import connection from '../../middlewares/signalrMiddleware';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { setIsTestStarted } from '../../store/testSlice';
 import { sendMessage } from '../../store/hubConnectionSlice';
-import { setActiveChatRoom, setChatRoomLastMessage, setChatRooms, sortChatRooms, setAllChatRooms, chatRoomWriting, setChatRoomOnline } from '../../store/messagesSlice';
+import { setActiveChatRoom, setChatRoomLastMessage, setChatRooms, sortChatRooms, setAllChatRooms, chatRoomWriting, setChatRoomOnline,
+    setChatRoomsShow, setChatRoomShow
+ } from '../../store/messagesSlice';
 import { addMessage } from '../../store/messagesSlice';
 import store from '../../store';
 import axios from 'axios';
@@ -26,6 +28,7 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
     const allChatRooms = useAppSelector(state => state.messagesSlice.allChatRooms);
     const firstName = useAppSelector(state => state.userSlice.firstName);
     const messages = useAppSelector(state => state.messagesSlice.messages);
+
     const dispatch = useAppDispatch();
 
     const [text, setText] = useState<string>("");
@@ -164,10 +167,17 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
     return (
         <div className='chat'>
             { activeChatRoom ?
-            <div>
-            <div className='chat-room'>
+            <div className='chat-room-content'>
+
+            <div id='chatRoom' className='chat-room'>
                 <div className='row chat-header'>
                     <div className='info'>
+                        <div className='block'>
+                            <img onClick={() => { 
+                                dispatch(setChatRoomShow(false))
+                                dispatch(setChatRoomsShow(true))
+                            }} className='back' src='./back.png' />
+                        </div>
                         <div className='block'>
                             <div className='avatar'>{activeChatRoom?.avatar != null ? <img src={environment.apiUrl + "/Assets/Images/" + activeChatRoom?.avatar + "_medium.png"} /> : activeChatRoom?.chatRoomName[0]}</div>
                         </div>
@@ -228,7 +238,9 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
                         </button>
                     </div>
                 </div>
-            </div>
+            </div> : <></>
+            
+
             </div>  
             : 
             <div className='content'>

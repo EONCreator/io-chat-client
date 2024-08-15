@@ -7,13 +7,17 @@ type MessagesState = {
     allChatRooms: ChatRoom[];
     activeChatRoom: ChatRoom | undefined;
     messages: Message[];
+    showChatRooms: boolean;
+    showChatRoom: boolean;
 }
 
 const initialState: MessagesState = {
     chatRooms: [],
     allChatRooms: [],
     activeChatRoom: undefined,
-    messages: []
+    messages: [],
+    showChatRooms: true,
+    showChatRoom: false
 };
 
 const messagesSlice = createSlice({
@@ -77,6 +81,13 @@ const messagesSlice = createSlice({
         setMessages(state, action: PayloadAction<Message[]>) {
             state.messages = action.payload
         },
+
+        setChatRoomsShow(state, action: PayloadAction<boolean>) {
+            state.showChatRooms = action.payload
+        },
+        setChatRoomShow(state, action: PayloadAction<boolean>) {
+            state.showChatRoom = action.payload
+        },
         resetTestState(state) {
             state.messages = []
         }
@@ -97,6 +108,8 @@ export const {
     chatRoomWriting,
     setChatRoomOnline,
     setMessages,
+    setChatRoomShow,
+    setChatRoomsShow,
     resetTestState 
 } = messagesSlice.actions;
   

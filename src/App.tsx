@@ -20,6 +20,12 @@ const App : FunctionComponent = () => {
   const isAuthenticated = useAppSelector(state => state.userSlice.isAuthenticated);
   const [firstConnect, setFirstConnect] = useState<boolean>(false);
 
+  const showChatRooms = useAppSelector(state => state.messagesSlice.showChatRooms)
+  const chatRoomShow = useAppSelector(state => state.messagesSlice.showChatRoom)
+
+  const mobile = useAppSelector(state => state.hubConnectionSlice.mobile)
+  const [width, setWidth] = useState(window.innerWidth);
+
   useEffect(() => {
     const config = {
       headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
@@ -68,8 +74,13 @@ const App : FunctionComponent = () => {
       <div className='frame'>
         {isAuthenticated ?
         <div className='frame'>
-          <ChatRooms></ChatRooms>
-          <ChatWindow></ChatWindow>
+          { width <= 400 ?
+            
+            (showChatRooms ? <ChatRooms></ChatRooms>
+             : <ChatWindow></ChatWindow>  )
+              : (<><ChatRooms></ChatRooms>
+             <ChatWindow></ChatWindow></>)
+          }
         </div>
         : <Authenticate title='Вход'></Authenticate>
         }

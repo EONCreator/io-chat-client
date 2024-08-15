@@ -14,7 +14,9 @@ import {
   sortChatRooms, 
   setAllChatRooms,
   setChatRoomOnline, 
-  setMessages} 
+  setMessages,
+  setChatRoomShow,
+  setChatRoomsShow} 
 from '../../store/messagesSlice';
 
 import './styles.scss';
@@ -212,6 +214,8 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
   const chatAction = (chatRoom: ChatRoom) => {
     console.log(allChatRooms)
     console.log(store.getState().messagesSlice.allChatRooms)
+    dispatch(setChatRoomsShow(false))
+    dispatch(setChatRoomShow(true))
     //if (chatRoomIsExists(chatRoom))
     setActiveChat(chatRoom)
     /*else

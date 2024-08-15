@@ -82,10 +82,16 @@ body {
 
     .chat-header {
         display: flex;
+        align-items: center;
         width: 100%;
         padding: 4px 12px;
         background: rgb(236 227 255);
         color: rgb(56, 56, 56);
+
+        .back {
+            width: 28px;
+            margin-right: 8px;
+        }
 
         .info {
             display: flex;
