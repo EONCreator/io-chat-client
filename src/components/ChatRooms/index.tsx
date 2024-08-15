@@ -194,6 +194,7 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
       };
       axios.get(environment.apiUrl + `/api/chats/getMessages?chatRoomId=${chatRoom.chatRoomId}`, config)
       .then(e => {
+        console.log(e.data)
         dispatch(setMessages(e.data.messages))
       });
       console.log("test 2")
