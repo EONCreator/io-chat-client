@@ -126,7 +126,7 @@ const RegistrationFrame: FC<RegistrationFrameProps> = ({ title }) => {
     <>
         {
           step == 1 
-          ? <div className='login-frame'>
+          ? <div className='login-frame' id="register">
             
             <div className='block'>
                 <h3 className='title'>{title}</h3>
@@ -140,7 +140,7 @@ const RegistrationFrame: FC<RegistrationFrameProps> = ({ title }) => {
                 placeholder='Введите ник пользователя'></input>
                 <p><label className='error'>{usernameError}</label></p>
             </div>
-            <div className='block'>
+            <div className='block' id="passwordBlock">
                 <input className='text-box'
                 value={password} 
                 onChange={handlePassword} 

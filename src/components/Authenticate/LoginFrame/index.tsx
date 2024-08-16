@@ -76,7 +76,7 @@ const LoginFrame: FC<LoginFrameProps> = ({ title }) => {
                 placeholder='Введите имя'></input>
                 <label className='error'></label>
             </div>
-            <div className='block'>
+            <div className='block' id="passwordBlock">
                 <input 
                 className='text-box' 
                 name='password'
