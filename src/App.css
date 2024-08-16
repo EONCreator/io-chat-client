@@ -44,6 +44,14 @@ iframe
     width: 99.7% !important;
     /*height: 80% !important;*/
   }
+
+  .chat-rooms .header {
+    
+  }
+
+  .chat-rooms .header .search-field {
+    padding: 13px !important;
+  }
   
   .chat-room-content {
     width: 100% !important;
