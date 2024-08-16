@@ -41,13 +41,15 @@ iframe
   .chat {
     display: flex !important;
     background-color: white;
-    width: 99% !important;
-    margin-top: 65px;
+    width: 99.7% !important;
+    /*height: 80% !important;*/
   }
   
   .chat-room-content {
     width: 100% !important;
-    height: 100% !important;
+    height: 83% !important;
+    margin-top: 120px;
+    margin-bottom: 120px;
     background-color: white;
   }
   
@@ -77,8 +79,8 @@ iframe
 
   .messages {
     width: 100% !important;
-    height: 100% !important;
-    padding-bottom: 145px;
+    height: 97% !important;
+    padding-bottom: 10px !important;
   }
 
   .messages-content {
