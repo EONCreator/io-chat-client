@@ -41,9 +41,12 @@ iframe
   .chat {
     display: flex !important;
     background-color: white;
+    width: 99% !important;
+    margin-top: 65px;
   }
   
   .chat-room-content {
+    width: 100% !important;
     height: 100% !important;
     background-color: white;
   }
@@ -55,28 +58,36 @@ iframe
   }
   
   .chat-room {
-    width: auto !important;
+    width: 100% !important;
     height: 100% !important;
-    align-content: end !important;
   }
 
   .chat-room .chat-header {
-    position: absolute;
+    position: fixed !important;
     top: 0;
-    max-height: 53px;
+    height: 58px;
   }
 
   .chat-room .input {
+    position: fixed !important;
+    bottom: 0 !important;
+    width: 100% !important;
     height: 40px !important;
   }
 
   .messages {
+    width: 100% !important;
     height: 100% !important;
+    padding-bottom: 145px;
   }
 
   .messages-content {
     margin-top: 0 !important;
   }
+}
+
+.chat-room-content {
+  background: transparent !important;
 }
 
 .frame {

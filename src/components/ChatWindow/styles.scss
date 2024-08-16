@@ -82,7 +82,6 @@ body {
 
     .chat-header {
         display: flex;
-        align-items: center;
         width: 100%;
         padding: 4px 12px;
         background: rgb(236 227 255);
@@ -90,7 +89,7 @@ body {
 
         .back {
             width: 28px;
-            margin-right: 8px;
+            margin-right: 5px;
         }
 
         .info {

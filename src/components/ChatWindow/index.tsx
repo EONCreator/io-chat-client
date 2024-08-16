@@ -181,7 +181,8 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
                                 dispatch(setChatRoomShow(false))
                                 dispatch(setChatRoomsShow(true))
                             }} className='back' src='./back.png' />
-                        </div> : <></>
+                        </div> 
+                        : <></>
                         }
                         <div className='block'>
                             <div className='avatar'>{activeChatRoom?.avatar != null ? <img src={environment.apiUrl + "/Assets/Images/" + activeChatRoom?.avatar + "_medium.png"} /> : activeChatRoom?.chatRoomName[0]}</div>
@@ -243,7 +244,7 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
                         </button>
                     </div>
                 </div>
-            </div> : <></>
+            </div>
             
 
             </div>  
