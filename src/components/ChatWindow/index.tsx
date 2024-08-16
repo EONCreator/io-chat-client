@@ -17,6 +17,8 @@ interface ChatWindowProps {
 }
 
 const ChatWindow: FC<ChatWindowProps> = ({}) => {
+    const [width, setWidth] = useState(window.innerWidth);
+
     const connected = useAppSelector(state => state.hubConnectionSlice.connected)
     const userId = useAppSelector(state => state.userSlice?.id);
     const userAvatar = useAppSelector(state => state.userSlice?.avatar)
@@ -172,12 +174,15 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
             <div id='chatRoom' className='chat-room'>
                 <div className='row chat-header'>
                     <div className='info'>
+                        {
+                            width <= 400 ?
                         <div className='block'>
                             <img onClick={() => { 
                                 dispatch(setChatRoomShow(false))
                                 dispatch(setChatRoomsShow(true))
                             }} className='back' src='./back.png' />
-                        </div>
+                        </div> : <></>
+                        }
                         <div className='block'>
                             <div className='avatar'>{activeChatRoom?.avatar != null ? <img src={environment.apiUrl + "/Assets/Images/" + activeChatRoom?.avatar + "_medium.png"} /> : activeChatRoom?.chatRoomName[0]}</div>
                         </div>

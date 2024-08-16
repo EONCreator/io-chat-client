@@ -81,7 +81,7 @@ iframe
 
 .frame {
   display: flex;
-  align-items: center;
+  align-items: start;
   inline-size: min-content;
   margin-top: 20px;
 }
