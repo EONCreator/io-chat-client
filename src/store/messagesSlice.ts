@@ -1,6 +1,6 @@
-import { connect, ConnectedProps } from 'react-redux'
 import { configureStore, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import store from '.';
+import { SearchMode } from "../enums";
 
 type MessagesState = {
     chatRooms: ChatRoom[];
@@ -9,6 +9,10 @@ type MessagesState = {
     messages: Message[];
     showChatRooms: boolean;
     showChatRoom: boolean;
+
+    searchMode: SearchMode;
+    searchedMessages: Message[];
+    selectedSearchedMessage: Message | undefined;
 }
 
 const initialState: MessagesState = {
@@ -17,8 +21,11 @@ const initialState: MessagesState = {
     activeChatRoom: undefined,
     messages: [],
     showChatRooms: true,
-    showChatRoom: false
-};
+    showChatRoom: false,
+    searchMode: SearchMode.CHAT_ROOMS,
+    searchedMessages: [],
+    selectedSearchedMessage: undefined
+}
 
 const messagesSlice = createSlice({
     name: 'messagesSlice',
@@ -88,6 +95,15 @@ const messagesSlice = createSlice({
         setChatRoomShow(state, action: PayloadAction<boolean>) {
             state.showChatRoom = action.payload
         },
+        setSearchMode(state, action: PayloadAction<SearchMode>) {
+            state.searchMode = action.payload
+        },
+        setSearchedMessges(state, action: PayloadAction<Message[]>) {
+            state.searchedMessages = action.payload
+        },
+        setSelectedSearchedMessage(state, action: PayloadAction<Message>) {
+            state.selectedSearchedMessage = action.payload
+        },
         resetTestState(state) {
             state.messages = []
         }
@@ -110,6 +126,9 @@ export const {
     setMessages,
     setChatRoomShow,
     setChatRoomsShow,
+    setSearchMode,
+    setSearchedMessges,
+    setSelectedSearchedMessage,
     resetTestState 
 } = messagesSlice.actions;
   

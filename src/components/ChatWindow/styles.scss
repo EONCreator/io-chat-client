@@ -109,6 +109,10 @@ body {
             }:hover {
                 background: rgb(238, 238, 238);
             }
+
+            .active {
+                background: rgb(238, 238, 238);
+            }
         }
 
         .flex-block {
@@ -157,11 +161,11 @@ body {
 
     .messages {
         width: 100%;
-        padding-bottom: 25px;
+        padding-bottom: 16px;
         height: 453px;
         overflow-y: scroll;
         align-items: end;
-        padding: 8px;
+        //padding: 8px;
         flex-wrap: wrap-reverse;
 
         .messages-content {
@@ -171,8 +175,9 @@ body {
             flex-direction: column;
 
             .message-container {
+                padding: 8px;
+                padding-bottom: 0;
                 align-items: start;
-                margin-top: 7px;
     
                 .avatar {
                     display: flex;
@@ -189,6 +194,19 @@ body {
                         width: inherit;
                         height: inherit;
                     }
+                }
+            }
+
+            .selectedSearchedMessage {
+                animation: selected-message 2s both;
+            }
+
+            @keyframes selected-message {
+                from {
+                    background: wheat;
+                }
+                to {
+                    background: transparent;
                 }
             }
 
@@ -276,6 +294,18 @@ body {
         padding: 8px;
         border-top: 1px solid rgb(230, 230, 230);
         background: white;
+
+        .attachment {
+            button {
+                width: 37px;
+                margin-left: 0;
+                margin-right: 7px;
+                
+                img {
+                    width: 100%;
+                }
+            }
+        }
     }
 
     .text-field {

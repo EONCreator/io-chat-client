@@ -16,7 +16,8 @@ import {
   setChatRoomOnline, 
   setMessages,
   setChatRoomShow,
-  setChatRoomsShow} 
+  setChatRoomsShow,
+  setSearchedMessges} 
 from '../../store/messagesSlice';
 
 import './styles.scss';
@@ -24,6 +25,8 @@ import connection from '../../middlewares/signalrMiddleware';
 import store from '../../store';
 import ConnectionStatus from './components/ConnectionStatus';
 import { environment } from '../../settings';
+import { SearchMode } from '../../enums';
+import ListOfSearchedMessages from './components/ListOfSearchedMessages';
 
 interface ChatRoomsProps {
     
@@ -35,13 +38,14 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
     const chatRooms = useAppSelector(state => state.messagesSlice.chatRooms);
     const allChatRooms = useAppSelector(state => state.messagesSlice.allChatRooms);
     const activeChatRoom = useAppSelector(state => state.messagesSlice.activeChatRoom);
+    const searchMode = useAppSelector(state => state.messagesSlice.searchMode)
     const dispatch = useAppDispatch();
 
     const [activeChatRoomIndex, setActiveChatRoomIndex] = useState<number>();
 
     const timerId = useRef<NodeJS.Timeout | null>(null);
 
-    const searchChatRoom = (e: any) => {
+    const searchOnTextInput = (e: any) => {
         if (e.target.value.length == 0)
             dispatch(setChatRooms(allChatRooms))
         else {
@@ -52,10 +56,27 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
 
     const search = (e: any) => {
           if (e.nativeEvent.code == 'Enter') {
-            if (chatRooms.length == 0)
-              findUser(e.target.value)
+            if (searchMode == SearchMode.CHAT_ROOMS) {
+              if (chatRooms.length == 0)
+                findUser(e.target.value)
+            }
+            else if (searchMode == SearchMode.MESSAGES) {
+              console.log(e.target.value)
+              findMessages(activeChatRoom!.chatRoomId, e.target.value)
+            }
           }
     };
+
+    const findMessages = (chatRoomId: number, text: string) => {
+      const config = {
+        headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
+      };
+      axios.get(environment.apiUrl + "/api/chats/findMessages?chatRoomId=" + chatRoomId + "&text=" + text, config)
+      .then(e => {
+        console.log(e.data)
+        dispatch(setSearchedMessges(e.data.messages))
+      });
+    }
 
     const getMessages = (chatRoomId: number) => {
       const config = {
@@ -231,8 +252,14 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
     <>
       <div className="chat-rooms"> 
         <div className='header'>
-            <input onChange={e => searchChatRoom(e)} onKeyDown={e => search(e)} className='search-field' placeholder='Поиск чата'></input>
+            <input 
+            onChange={e => searchOnTextInput(e)} 
+            onKeyDown={e => search(e)} 
+            className='search-field' 
+            placeholder='Поиск чата'></input>
         </div>
+        {searchMode == SearchMode.CHAT_ROOMS 
+        ? 
         <div className='chatRooms'>
         {chatRooms.map((c, i) => 
             <div key={i} onClick={() => chatAction(c)} 
@@ -248,7 +275,12 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
                 {c.unreadMessages > 0 ? <div className='unread-messages'>{c.unreadMessages}</div> : <></>}
             </div>
         )}
+        </div> 
+        : 
+        <div className='chatRooms'>
+          <ListOfSearchedMessages></ListOfSearchedMessages>
         </div>
+        }
         <ConnectionStatus></ConnectionStatus>
       </div>
     </>

@@ -5,12 +5,14 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { setIsTestStarted } from '../../store/testSlice';
 import { sendMessage } from '../../store/hubConnectionSlice';
 import { setActiveChatRoom, setChatRoomLastMessage, setChatRooms, sortChatRooms, setAllChatRooms, chatRoomWriting, setChatRoomOnline,
-    setChatRoomsShow, setChatRoomShow
+    setChatRoomsShow, setChatRoomShow,
+    setSearchMode
  } from '../../store/messagesSlice';
 import { addMessage } from '../../store/messagesSlice';
 import store from '../../store';
 import axios from 'axios';
 import { environment } from '../../settings';
+import { SearchMode } from '../../enums';
 
 interface ChatWindowProps {
 
@@ -30,6 +32,9 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
     const allChatRooms = useAppSelector(state => state.messagesSlice.allChatRooms);
     const firstName = useAppSelector(state => state.userSlice.firstName);
     const messages = useAppSelector(state => state.messagesSlice.messages);
+
+    const searchMode = useAppSelector(state => state.messagesSlice.searchMode)
+    const selectedSearchedMessage = useAppSelector(state => state.messagesSlice.selectedSearchedMessage)
 
     const dispatch = useAppDispatch();
 
@@ -155,6 +160,7 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
                 if (message.senderId == store.getState().userSlice?.id 
                 || (message.chatRoomId == store.getState().messagesSlice.activeChatRoom?.chatRoomId)) {
                     dispatch(addMessage({ 
+                        id: message.id,
                         chatRoomId: message.chatRoomId,
                         senderId: message.senderId, 
                         text: message.text,
@@ -194,14 +200,14 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
                         </div>
                         
                         <div className='block search-block'>
-                            <button><img src="./search.webp"></img></button>
+                            <button className={searchMode == SearchMode.MESSAGES ? 'active' : ''} onClick={() => dispatch(setSearchMode(searchMode == SearchMode.CHAT_ROOMS ? SearchMode.MESSAGES : SearchMode.CHAT_ROOMS))}><img src="./search.webp"></img></button>
                         </div>
                     </div>
                 </div>
-                <div className='row messages'>
+                <div className='row messages' id="messageList">
                     <div className='messages-content'>
                     {messages.map((m, i) => 
-                    <div key={i} className='message-container'>
+                    <div id={"message_" + m.id} key={i} className={'message-container ' + (selectedSearchedMessage != undefined ? (selectedSearchedMessage.id == m .id ? 'selectedSearchedMessage' : '') : '')}>
                         
                         {m.senderId != userId ? <div className='avatar sender'>
                             {m.senderAvatar != null ? <img src={environment.apiUrl + "/Assets/Images/" + m.senderAvatar + "_medium.png"} /> 
@@ -225,7 +231,9 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
                     </div>
                 </div>
                 <div className='row input'>
-                    {writing}
+                    <div className='attachment'>
+                        <button><img src='./attachment.svg'></img></button>
+                    </div>
                     <div className='text-field'>
                         <textarea 
                         value={text}
