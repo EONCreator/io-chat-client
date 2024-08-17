@@ -96,6 +96,8 @@ const messagesSlice = createSlice({
             state.showChatRoom = action.payload
         },
         setSearchMode(state, action: PayloadAction<SearchMode>) {
+            state.searchedMessages = []
+            state.selectedSearchedMessage = undefined
             state.searchMode = action.payload
         },
         setSearchedMessges(state, action: PayloadAction<Message[]>) {

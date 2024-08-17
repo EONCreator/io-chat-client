@@ -153,6 +153,12 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
         return date.getHours() + ':' + minutes;
     }
 
+    const getTimeOfMessage = (date: Date) => {
+        const dateString = new Date(date)
+        const minutes = dateString.getMinutes() < 10 ? '0' + dateString.getMinutes().toString() : dateString.getMinutes();
+        return dateString.getHours() + ':' + minutes;
+    }
+
     useEffect(() => {
         connection.on("send", (message) => {
             console.log(message)
@@ -164,6 +170,7 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
                         chatRoomId: message.chatRoomId,
                         senderId: message.senderId, 
                         text: message.text,
+                        date: message.date,
                         senderName: message.senderName,
                         senderAvatar: message.senderAvatar
                      }))
@@ -218,7 +225,7 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
                             {i == 0 || (messages[i] != null && messages[i - 1].senderId != messages[i].senderId) ? <div className='sender-name'>{m.senderName}</div> : <></>}
                             <div className='data'>
                                 <div className='text'>{m.text}</div>
-                                <div className='time'>{getTime()}</div>
+                                <div className='time'>{getTimeOfMessage(m.date!)}</div>
                             </div>
                         </div>
                         {m.senderId == userId ? <div className='avatar getter'>

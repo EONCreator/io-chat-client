@@ -17,6 +17,12 @@ const ListOfSearchedMessages: FC<ListOfSearchedMessagesProps> = () => {
 
     const dispatch = useAppDispatch();
 
+    const getTime = (date: Date) => {
+        const dateString = new Date(date)
+        const minutes = dateString.getMinutes() < 10 ? '0' + dateString.getMinutes().toString() : dateString.getMinutes();
+        return dateString.getHours() + ':' + minutes;
+    }
+
     const showMessageInChat = (message: Message) => {
         console.log(message)
         dispatch(setSelectedSearchedMessage(message))
@@ -41,8 +47,9 @@ const ListOfSearchedMessages: FC<ListOfSearchedMessagesProps> = () => {
                         <div className='info'>
                             <div className='name'>{m.senderName}</div>
                             <div className='last-message'>{m.text.length > 23 ? m.text.substring(0, 23) + "..." : m.text}</div>
+                        </div>
+                        <div className="time"><div>{m.date != null ? getTime(m.date) : ""}</div></div>
                     </div>
-                </div>
         )}
             </div> 
         : 

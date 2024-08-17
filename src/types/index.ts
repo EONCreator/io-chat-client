@@ -18,6 +18,7 @@ type ChatRoom = {
 type Message = {
     id?: number,
     senderId: string;
+    date?: Date,
     text: string;
     chatRoomId: number;
     senderName?: string;

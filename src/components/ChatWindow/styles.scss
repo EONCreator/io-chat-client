@@ -74,6 +74,7 @@ body {
         font-size: 14px;
         display: flex;
         width: 100%;
+        padding: 0 4px;
 
         div {
             display: flex;
@@ -162,7 +163,7 @@ body {
     .messages {
         width: 100%;
         padding-bottom: 16px;
-        height: 453px;
+        height: 460px;
         overflow-y: scroll;
         align-items: end;
         //padding: 8px;
@@ -291,7 +292,6 @@ body {
     }
 
     .input {
-        padding: 8px;
         border-top: 1px solid rgb(230, 230, 230);
         background: white;
 
@@ -306,6 +306,9 @@ body {
                 }
             }
         }
+            div {
+                align-content: center !important;
+            }
     }
 
     .text-field {
@@ -317,6 +320,7 @@ body {
             border: none;
             outline: none;
             font-family: sans-serif;
+            padding-top: 14px;
         }
     }
 
