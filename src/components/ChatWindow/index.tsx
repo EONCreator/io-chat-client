@@ -170,7 +170,6 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
         <div className='chat'>
             { activeChatRoom ?
             <div className='chat-room-content'>
-
             <div id='chatRoom' className='chat-room'>
                 <div className='row chat-header'>
                     <div className='info'>
@@ -184,12 +183,18 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
                         </div> 
                         : <></>
                         }
-                        <div className='block'>
-                            <div className='avatar'>{activeChatRoom?.avatar != null ? <img src={environment.apiUrl + "/Assets/Images/" + activeChatRoom?.avatar + "_medium.png"} /> : activeChatRoom?.chatRoomName[0]}</div>
+                        <div className='flex-block'>
+                            <div className='block'>
+                                <div className='avatar'>{activeChatRoom?.avatar != null ? <img src={environment.apiUrl + "/Assets/Images/" + activeChatRoom?.avatar + "_medium.png"} /> : activeChatRoom?.chatRoomName[0]}</div>
+                            </div>
+                            <div className='block'>
+                                <div className='name'>{activeChatRoom?.chatRoomName}</div>
+                                <div className='status'>{activeChatRoom?.online ? <span className='online'>online</span> : <span className='offline'>Был (а) недавно</span>}</div>
+                            </div>
                         </div>
-                        <div className='block'>
-                            <div className='name'>{activeChatRoom?.chatRoomName}</div>
-                            <div className='status'>{activeChatRoom?.online ? <span className='online'>online</span> : <span className='offline'>Был (а) недавно</span>}</div>
+                        
+                        <div className='block search-block'>
+                            <button><img src="./search.webp"></img></button>
                         </div>
                     </div>
                 </div>
