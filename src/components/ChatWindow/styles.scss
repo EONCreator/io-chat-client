@@ -48,7 +48,7 @@ body {
         padding: 3px 10px;
         color: white;
         background: #7f8dff;
-        border-radius: 7px;
+        border-radius: 20px;
         line-height: 21px;    
     }
 }
@@ -84,8 +84,9 @@ body {
         display: flex;
         width: 100%;
         padding: 4px 12px;
-        background: rgb(236 227 255);
+        background: rgb(255 255 255);
         color: rgb(56, 56, 56);
+        border-bottom: 1px solid #f3f1f1;
 
         .back {
             width: 28px;

@@ -15,21 +15,22 @@
 .chat-rooms {
     display: block;
     border: 1px solid lightgray;
-    background-color: white;
+    background-color: #f3f3f3;;
     width: 240px;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 
     .header {
         padding: 11px 0;
-        //border-bottom: 1px solid rgb(207, 207, 207);
-        background: rgb(236 227 255);
+        /* background: rgb(236, 227, 255); */
+        border-bottom: 1px solid #d1d1d1;
+        margin: 0 10px;
 
         .search-field {
-            width: 83%;
+            width: 89%;
             padding: 8px;
-            border-radius: 8px;
-            border: 1px solid rgb(236, 227, 255);
+            border-radius: 20px;
+            border: 1px solid rgb(233, 233, 233);
             background: rgb(255 255 255);
             color: rgb(68, 68, 68);
             outline: none;
@@ -37,7 +38,7 @@
     }
 
     .chatRooms {
-        height: 525px;
+        height: 524px;
         overflow-y: scroll;
 
         .diod {
@@ -82,7 +83,7 @@
         align-items: center;
         justify-content: start;
         padding: 4px 4px;
-        border-bottom: 1px solid whitesmoke;
+        //border-bottom: 1px solid whitesmoke;
         cursor: pointer;
 
         .avatar {
@@ -144,7 +145,7 @@
     }
 
     .user:hover {
-        background: whitesmoke;
+        background: rgb(228, 228, 228);
     }
 
     .active {
