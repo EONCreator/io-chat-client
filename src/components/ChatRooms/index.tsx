@@ -269,7 +269,7 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
                 <div className='info'>
                   <div className='name'>{c.unreadMessages > 0 ? c.chatRoomName.substring(0, 15) + "..." : c.chatRoomName}</div>
                   <div className='last-message'>
-                    {c.lastMessage != "Печатает..." ? (c.lastMessage.length > 18 ? c.lastMessage.substring(0, 18) + "..." : c.lastMessage) : <span className='writing'>Печатает...</span>}
+                    {c.lastMessage != "Печатает..." ? (c.lastMessage.length > 23 ? c.lastMessage.substring(0, 23) + "..." : c.lastMessage) : <span className='writing'>Печатает...</span>}
                     </div>
                 </div>
                 {c.unreadMessages > 0 ? <div className='unread-messages'>{c.unreadMessages}</div> : <></>}
