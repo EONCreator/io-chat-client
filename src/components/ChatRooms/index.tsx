@@ -112,7 +112,7 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
   }, []);
 
   useEffect(() => {
-    connection.on("send", (message) => {
+    connection.on("SEND_MESSAGE", (message) => {
         console.log(message)
         console.log(allChatRooms)
         if (store.getState().hubConnectionSlice.connected) {
@@ -127,7 +127,7 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
           else {
             const newChatRoom = {
               chatRoomId: message.chatRoomId,
-              id: message.senderId,
+              getterId: message.senderId,
               avatar: activeChatRoom?.avatar,
               chatRoomName: message.senderName,
               lastMessage: message.text,
@@ -147,7 +147,7 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
 
   // When user writing message
   useEffect(() => {
-    connection.on("writing", (chatRoomId) => {
+    connection.on("WRITING", (chatRoomId) => {
       const chatRoom = chatRooms.filter(c => c.chatRoomId == chatRoomId)[0]
 
       dispatch(setChatRoomLastMessage({ chatRoom, lastMessage:  "Печатает..." }))
@@ -166,16 +166,16 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
   })
 
   useEffect(() => {
-    connection.on("create_chat", (chatRoom) => {
+    connection.on("CREATE_CHAT", (chatRoom) => {
       console.log(chatRoom)
       const room = {
           chatRoomId: chatRoom.chatRoomId,
-          id: "chatRoom.id",
+          getterId: chatRoom.getterId,
           avatar: chatRoom.avatar,
           chatRoomName: chatRoom.chatRoomName,
-          lastMessage: "Последнее сообщение",
+          lastMessage: chatRoom.lastMessage,
           unreadMessages: 0,
-          online: true //TODO
+          online: chatRoom.online
         }
 
         const rooms = [...allChatRooms, room]
@@ -191,17 +191,20 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
         axios.get(environment.apiUrl + `/api/chats/findUser?userName=${userName}`, config)
         .then(e => {
           console.log(e.data)
+          const user = e.data.user
+          if (user) {
           const room = {
-            id: e.data.id,
-            userName: e.data.userName,
-            avatar: e.data.avatar,
-            chatRoomId: e.data.chatRoomId ?? 0,
-            chatRoomName: e.data.fullName,
+            getterId: user.id,
+            userName: user.userName,
+            avatar: user.avatar,
+            chatRoomId: user.chatRoomId ?? 0,
+            chatRoomName: user.fullName,
             lastMessage: '',
             unreadMessages: 0,
-            online: e.data.online
+            online: user.online
           }
           dispatch(addChatRoom(room))
+          }
         });
   };
 
@@ -243,7 +246,7 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
       createChat(chatRoom)*/
   }
 
-    connection.on("online", (userId, online) => {
+    connection.on("ONLINE", (userId, online) => {
       console.log(online)
       dispatch(setChatRoomOnline({id: userId, online}))
     });
@@ -268,9 +271,9 @@ const ChatRooms: FC<ChatRoomsProps> = () => {
                 <div className='avatar'>{c.avatar != null ? <div><img src={environment.apiUrl + "/Assets/Images/" + c.avatar + "_medium.png"} /></div> : c.chatRoomName[0]}{c.online ? <span className='diod online'>•</span> : <span className="diod offline">•</span>}</div>
                 <div className='info'>
                   <div className='name'>{c.unreadMessages > 0 ? c.chatRoomName.substring(0, 15) + "..." : c.chatRoomName}</div>
-                  <div className='last-message'>
+                  {c.lastMessage != null ? <div className='last-message'>
                     {c.lastMessage != "Печатает..." ? (c.lastMessage.length > 23 ? c.lastMessage.substring(0, 23) + "..." : c.lastMessage) : <span className='writing'>Печатает...</span>}
-                    </div>
+                  </div> : <></>}
                 </div>
                 {c.unreadMessages > 0 ? <div className='unread-messages'>{c.unreadMessages}</div> : <></>}
             </div>

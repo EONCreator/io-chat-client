@@ -76,12 +76,12 @@ const messagesSlice = createSlice({
         },
         setChatRoomOnline(state, action: PayloadAction<{id: string, online: boolean}>) {
             console.log(action.payload.id)
-            let chatRoom = state.chatRooms.filter(c => c.id == action.payload.id)[0]
+            let chatRoom = state.chatRooms.filter(c => c.getterId == action.payload.id)[0]
             console.log(chatRoom)
             chatRoom.online = action.payload.online
 
             if (state.activeChatRoom != null) {
-                if (state.activeChatRoom.id == action.payload.id)
+                if (state.activeChatRoom.getterId == action.payload.id)
                     state.activeChatRoom.online = action.payload.online
             }
         },

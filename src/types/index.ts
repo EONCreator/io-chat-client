@@ -6,7 +6,7 @@ type User = {
 }
 
 type ChatRoom = {
-    id: string | undefined;
+    getterId: string | undefined;
     avatar: string | undefined;
     chatRoomId: number;
     chatRoomName: string;

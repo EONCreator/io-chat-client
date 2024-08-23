@@ -26,12 +26,15 @@ const Authenticate: FC<AuthenticateProps> = ({ title }) => {
       axios.get(environment.apiUrl + "/api/users/getCurrentUser", config)
       .then(e => {
         console.log(e.data)
+        const user = e.data.user
+        if (user){
         dispatch(setAuthenticated(true))
-        dispatch(setAvatar(e.data.avatar))
-        dispatch(setUserId(e.data.id))
-        dispatch(setUserName(e.data.userName))
-        dispatch(setFirstName(e.data.firstName))
-        dispatch(setLastName(e.data.lastName))
+        dispatch(setAvatar(user.avatar))
+        dispatch(setUserId(user.id))
+        dispatch(setUserName(user.userName))
+        dispatch(setFirstName(user.firstName))
+        dispatch(setLastName(user.lastName))
+        }
       });
     }
 

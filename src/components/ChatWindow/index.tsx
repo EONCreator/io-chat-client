@@ -106,21 +106,24 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
 
         // If chatroom doesn't exists, create chatroom
         if (message.chatRoomId == 0) {
-            const ids = [userId, activeChatRoom!.id]
+            const userIds = [userId, activeChatRoom!.getterId]
 
-            axios.post(environment.apiUrl + "/api/chats/createChatRoom", { ids }, config)
+            axios.post(environment.apiUrl + "/api/chats/createChatRoom", { userIds }, config)
             .then((e) => {
                 console.log(e.data)
 
+                var chatRoom = e.data.chatRoom
+
+                if (chatRoom) {
                 const room = {
-                    chatRoomId: e.data.chatRoomId,
-                    id: "chatRoom.id",
+                    chatRoomId: chatRoom.chatRoomId,
+                    getterId: "chatRoom.id",
                     avatar: activeChatRoom!.avatar,
                     chatRoomName: activeChatRoom!.chatRoomName,
-                    lastMessage: e.data.lastMessage,
+                    lastMessage: chatRoom.lastMessage,
                     unreadMessages: 0,
                     userName: "user_name",
-                    online: true // TODO
+                    online: chatRoom.online // TODO
                 }
 
                 const rooms = [...allChatRooms, room]
@@ -137,6 +140,7 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
                 .then((e) => {
                     console.log(e)
                 })
+                }
             });
         } else {
             console.log(message)
@@ -160,7 +164,7 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
     }
 
     useEffect(() => {
-        connection.on("send", (message) => {
+        connection.on("SEND_MESSAGE", (message) => {
             console.log(message)
             if (store.getState().hubConnectionSlice.connected) {
                 if (message.senderId == store.getState().userSlice?.id 
