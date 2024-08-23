@@ -133,7 +133,7 @@ const ChatWindow: FC<ChatWindowProps> = ({}) => {
                 dispatch(setActiveChatRoom(room))
                 console.log(room)
                 console.log(activeChatRoom)
-                message.chatRoomId = e.data.chatRoomId
+                message.chatRoomId = chatRoom.chatRoomId
                 console.log(message)
 
                 axios.post(environment.apiUrl + `/api/chats/sendMessage`, message, config)
